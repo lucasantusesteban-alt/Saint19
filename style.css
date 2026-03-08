@@ -1,0 +1,267 @@
+/* Base */
+:root {
+  --radar-green: #00ff88;
+  --radar-green-dim: rgba(0, 255, 136, 0.2);
+  --radar-bg: #030a06;
+  --radar-panel: #050b08;
+  /* Muy oscuro de base */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #030303;
+  color: white;
+  font-family: sans-serif;
+  overflow-x: hidden;
+}
+
+/* HERO SECTION */
+.hero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#main-title {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 900;
+  font-size: 8rem;
+  margin: 0;
+  letter-spacing: 5px;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+#play-button {
+  margin-top: 40px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 1.5rem;
+  padding: 15px 50px;
+  background: transparent;
+  color: white;
+  border: 1px solid white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+#play-button:hover {
+  background: white;
+  color: black;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+}
+
+/* SCANNER SECTION */
+.scanner-section {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #030303;
+  padding: 2rem;
+}
+
+.radar-container {
+  width: 800px;
+  height: 600px;
+  background: var(--radar-panel);
+  border-radius: 20px;
+  border: 2px solid #1a2a22;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.8), inset 0 0 100px rgba(0, 0, 0, 0.9);
+  font-family: 'Roboto Mono', monospace;
+  /* Cursor especial para "buscar" */
+  cursor: crosshair;
+}
+
+/* UI Elements */
+.radar-ui,
+.radar-info,
+.new-scan-btn {
+  z-index: 20;
+  /* Por encima de la linterna y los anillos */
+}
+
+.radar-ui {
+  position: absolute;
+  color: var(--radar-green);
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  pointer-events: none;
+}
+
+.ui-top-left {
+  top: 30px;
+  left: 30px;
+}
+
+.ui-top-right {
+  top: 30px;
+  right: 30px;
+}
+
+.radar-info {
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  pointer-events: none;
+  /* No bloquear eventos de ratón */
+}
+
+.info-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-block .label {
+  color: #00aa55;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.info-block .value {
+  color: var(--radar-green);
+  font-size: 1.1rem;
+}
+
+.new-scan-btn {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  background: rgba(0, 255, 136, 0.05);
+  border: 1px solid var(--radar-green);
+  color: var(--radar-green);
+  font-family: 'Roboto Mono', monospace;
+  padding: 10px 25px;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.new-scan-btn:hover {
+  background: var(--radar-green-dim);
+  box-shadow: 0 0 15px var(--radar-green-dim);
+}
+
+/* Radar Geometric Elements */
+.radar-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(0, 255, 136, 0.1);
+  /* Anillos muy muy tenues de base */
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.ring-1 {
+  width: 500px;
+  height: 500px;
+}
+
+.ring-2 {
+  width: 350px;
+  height: 350px;
+}
+
+.ring-3 {
+  width: 200px;
+  height: 200px;
+}
+
+.radar-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  background: rgba(0, 255, 136, 0.3);
+  border-radius: 50%;
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* SPOTLIGHT (Linterna unida al ratón) */
+.spotlight {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 8;
+  /* El CSS variable se actualizará vía JS. Si no hay, no se ve. */
+  background: radial-gradient(circle 200px at var(--mouse-x, -1000px) var(--mouse-y, -1000px),
+      rgba(0, 255, 136, 0.25) 0%,
+      rgba(0, 255, 136, 0.05) 50%,
+      transparent 100%);
+  /* Un modo de mezcla para dar aspecto técnico luminoso sobre las cuadrículas/anillos */
+  mix-blend-mode: screen;
+}
+
+
+/* Interactive Points */
+.radar-points-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}
+
+.radar-point {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: transparent;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  cursor: crosshair;
+
+  /* Inicialmente no se ve. Dejaremos que JS controle la opacidad por proximidad */
+  opacity: 0;
+  box-shadow: 0 0 0 transparent;
+  transition: box-shadow 0.3s ease, background 0.3s ease;
+}
+
+/* Hover directo para que "brille a tope" cuando lo cazas del todo */
+.radar-point:hover {
+  opacity: 1 !important;
+  /* Fuerza la visibilidad total */
+  background: #fff;
+  /* White core */
+  box-shadow: 0 0 15px var(--radar-green), 0 0 30px var(--radar-green);
+  transform: translate(-50%, -50%) scale(1.5);
+}
+
+/* Tooltip */
+.radar-tooltip {
+  position: absolute;
+  pointer-events: none;
+  background: rgba(0, 20, 10, 0.9);
+  border: 1px solid var(--radar-green);
+  color: var(--radar-green);
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 1.1rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: 30;
+  white-space: nowrap;
+}

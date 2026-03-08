@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SAINT 19 - Scanner</title>
+  <!-- Simple Modern Fonts: Inter for UI, Roboto Mono for numbers -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&amp;family=Roboto+Mono:wght@400;500&amp;display=swap"
+    rel="stylesheet">
+
+  <script type="module" crossorigin src="./assets/index-C9SKB-dW.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-C-aRo0vq.css">
+</head>
+
+<body>
+
+  <!-- Hero Section -->
+  <div class="hero">
+    <h1 id="main-title">SAINT 19</h1>
+    <button id="play-button"
+      onclick="document.getElementById('scanner-section').scrollIntoView({behavior: 'smooth'})">JUGAR</button>
+  </div>
+
+  <!-- Scanner Section -->
+  <div id="scanner-section" class="scanner-section">
+    <div class="radar-container" id="radar">
+
+      <!-- Interactive Spotlight tied to mouse -->
+      <div class="spotlight" id="spotlight"></div>
+
+      <!-- Radar UI Overlay -->
+      <div class="radar-ui ui-top-left">Manual Scan</div>
+      <div class="radar-ui ui-top-right">Ready</div>
+
+      <div class="radar-info">
+        <div class="info-block">
+          <span class="label">Target</span>
+          <span class="value x-coord">--.--</span>
+        </div>
+        <div class="info-block">
+          <span class="label">Coordinates</span>
+          <span class="value y-coord">---, ---</span>
+        </div>
+        <div class="info-block">
+          <span class="label">Scale</span>
+          <span class="value z-coord">--.---</span>
+        </div>
+      </div>
+
+      <button class="new-scan-btn">Calibrate</button>
+
+      <!-- Radar Rings -->
+      <div class="radar-ring ring-1"></div>
+      <div class="radar-ring ring-2"></div>
+      <div class="radar-ring ring-3"></div>
+      <div class="radar-center"></div>
+
+      <!-- Interactive Points (Hidden until hovered/swept) -->
+      <div class="radar-points-layer" id="points-layer">
+        <div class="radar-point" style="top: 30%; left: 40%;" data-info="Drop #01: Madrid"></div>
+        <div class="radar-point" style="top: 50%; left: 20%;" data-info="Drop #02: Secret Location"></div>
+        <div class="radar-point" style="top: 20%; left: 70%;" data-info="Access Code: 8943"></div>
+        <div class="radar-point" style="top: 70%; left: 60%;" data-info="New Collection 24H"></div>
+      </div>
+
+      <!-- Tooltip that shows info when hovering a point -->
+      <div class="radar-tooltip" id="tooltip"></div>
+    </div>
+  </div>
+
+</body>
+
+</html>
